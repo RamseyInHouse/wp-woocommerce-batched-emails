@@ -1,0 +1,30 @@
+{
+	"name": "WooCommerce Email Digests",
+	"version": "1.0.0",
+	"authors": [
+	    {
+	      "name": "Philip Downer",
+	      "email": "philip.downer@daveramsey.com",
+	      "homepage": "http://philipdowner.com"
+	    },
+	    {
+	      "name": "Alex MacArthur",
+	      "email": "alex.macarthur@daveramsey.com",
+	      "homepage": "http://macarthur.me"
+	    }
+	],
+	"require-dev": {
+		"phpunit/phpunit": "^7.3",
+		"mockery/mockery": "^1.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"WCEmailDigest\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"WCEmailDigestTests\\": "tests/"
+		}
+	}
+}
