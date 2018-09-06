@@ -41,10 +41,7 @@ class Subscribers {
 		$statuses = empty($statuses) ? ['wc-active'] : $statuses;
 		$number = $number <= 0 ? -1 : $number;
 
-		foreach( $statuses as $key => $status ) {
-			if( substr($status, 0, 3) == 'wc-') continue;
-			$statuses[$key] = 'wc-' . $status;
-		}
+		$statuses = $this->sanitizeWooCommerceStatuses($statuses);
 
 		$this->queryArgs = [
 			'post_type' => 'shop_subscription',
@@ -62,7 +59,19 @@ class Subscribers {
 		];
 
 		$this->setSubscribers();
+	}
 
+	/**
+	 * Ensure all statuses begin with 'wc-'
+	 * @param  array $statuses Array of status names
+	 * @return array
+	 */
+	public function sanitizeWooCommerceStatuses($statuses) {
+		foreach( $statuses as $key => $status ) {
+			if( substr($status, 0, 3) == 'wc-') continue;
+			$statuses[$key] = 'wc-' . $status;
+		}
+		return $statuses;
 	}
 
 	/**

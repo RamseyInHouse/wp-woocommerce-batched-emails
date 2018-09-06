@@ -1,5 +1,8 @@
 {
 	"name": "WooCommerce Email Digests",
+	"description": "Send recurring email digests based on WooCommerce orders or subscriptions.",
+	"type": "wordpress-plugin",
+	"license": "GPL v3",
 	"version": "1.0.0",
 	"authors": [
 	    {
@@ -10,7 +13,7 @@
 	    {
 	      "name": "Alex MacArthur",
 	      "email": "alex.macarthur@daveramsey.com",
-	      "homepage": "http://macarthur.me"
+	      "homepage": "https://macarthur.me"
 	    }
 	],
 	"require-dev": {

@@ -9,16 +9,25 @@ class DigestEmail extends \WC_Email {
 	 */
 	public $subscribers;
 
+	/**
+	 * Send frequency
+	 * @var string
+	 */
+	public $schedule;
+
+	/**
+	 * Message receipient(s)
+	 * @var string
+	 */
+	public $recipient;
+
 	public function __construct() {
 		$this->template_base = plugin_dir_path(__DIR__) . 'templates/';
 
 		parent::__construct();
 
 		$this->schedule = $this->get_option('schedule');
-		$this->recipient = $this->get_option('recipient');
-		if( !$this->recipient ) {
-			$this->recipient = get_option('admin_email');
-		}
+		$this->recipient = $this->get_option('recipient') ?: get_option('admin_email');
 	}
 
 	/**
@@ -33,6 +42,11 @@ class DigestEmail extends \WC_Email {
 		}
 		else {
 			$this->unschedule();
+		}
+
+		if( $this->get_option('send_now') == 'yes' ) {
+			$this->trigger();
+			$this->update_option( 'send_now', 'no' );
 		}
 	}
 
@@ -74,6 +88,12 @@ class DigestEmail extends \WC_Email {
 				'options'     => $this->get_email_type_options(),
 				'desc_tip'    => true,
 			],
+			'send_now' => [
+				'title' => 'Send now?',
+				'type' => 'checkbox',
+				'label' => 'Yes, send the email digest on save',
+				'default' => 'no'
+			]
 		];
 	}
 
@@ -85,6 +105,8 @@ class DigestEmail extends \WC_Email {
 		if( !$this->is_enabled() || !$this->recipient ) return;
 
 		$startTime = $this->schedule == 'daily' ? '-24 hours' : '-1 week';
+
+		if( ENV == 'dev' ) $startTime = '-10 years';
 		
 		$this->subscribers = new Subscribers($this->subscriberStatus, $startTime);
 		if( !$this->subscribers->hasSubscribers() ) {
@@ -148,19 +170,31 @@ class DigestEmail extends \WC_Email {
 	}
 
 	/**
+	 * Get scheduling parameters
+	 * @return array
+	 */
+	public function getCronScheduleParams() {
+		$schedule = defined('ENV') && ENV === 'dev' ? 'five_minutes' : $this->schedule;
+
+		$firstRun = current_time('timestamp', 1);
+		if( $schedule !== 'five_minutes' ) {
+			$firstRun = $schedule == 'daily' ? strtotime('tomorrow 7 a.m.') : strtotime('next monday 7 a.m.');
+		}
+
+		return [
+			$schedule,
+			$firstRun,
+			static::$cronHook
+		];
+	}
+
+	/**
 	 * Schedule CRON event
 	 * @return void
 	 */
 	public function schedule() {
-		$schedule = defined('ENV') && ENV === 'dev' ? 'five_minutes' : $this->get_option('schedule');
-		
-		$firstRun = current_time('timestamp', 1);
-		if( $schedule !== 'five_minutes' ) {
-			$firstRun = $schedule == 'daily' ? strtotime('today 7 a.m.') : strtotime('next monday 7 a.m.');
-		}
-
-		return wp_schedule_event($firstRun, $schedule, static::$cronHook);
-
+		$params = $this->getCronScheduleParams();
+		return wp_schedule_event(...$params);
 	}
 
 	/**

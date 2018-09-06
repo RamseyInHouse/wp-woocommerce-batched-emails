@@ -32,9 +32,6 @@ if( wcEmailDigest_requirementsMet() ) {
 	}
 
 	require_once(plugin_dir_path(__FILE__) . '/vendor/autoload.php');
-	// require(plugin_dir_path(__FILE__) . '/src/Subscribers.php');
-	// require(plugin_dir_path(__FILE__) . '/src/DigestEmail.php');
-	// require(plugin_dir_path(__FILE__) . '/src/NewSubscriptionsDigestEmail.php');
 	
 	//Hook into available WC Emails
 	add_filter('woocommerce_email_classes', 'wcEmailDigest_add_new_subscription_digest', 10, 1);

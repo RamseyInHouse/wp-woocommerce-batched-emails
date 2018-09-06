@@ -1,6 +1,6 @@
 <?php
 /**
- * New subscribers email digest
+ * Cancelled subscribers email digest
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

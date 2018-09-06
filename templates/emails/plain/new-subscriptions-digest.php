@@ -1,8 +1,7 @@
 <?php
 /**
- /**
- * New subscribers email digest (plain text)
- */
+* New subscribers email digest (plain text)
+*/
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
