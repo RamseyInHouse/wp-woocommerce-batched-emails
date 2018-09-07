@@ -3,7 +3,7 @@
 Plugin Name:  WooCommerce Email Digest
 Plugin URI:   https://www.daveramsey.com
 Description:  Compiles a list of recent events/transactions from WooCommerce and emails the designated recipient on a recurring schedule.
-Version:      1.0.0
+Version:      1.0.1
 Author:       Philip Downer <philip.downer@daveramsey.com>
 Author URI:   https://philipdowner.com
 License:      GPLv3
