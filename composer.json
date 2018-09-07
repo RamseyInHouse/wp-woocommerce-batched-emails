@@ -1,5 +1,5 @@
 {
-	"name": "WooCommerce Email Digests",
+	"name": "RamseyInHouse/wp-woocommerce-email-digest",
 	"description": "Send recurring email digests based on WooCommerce orders or subscriptions.",
 	"type": "wordpress-plugin",
 	"license": "GPL v3",
