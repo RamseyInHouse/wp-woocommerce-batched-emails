@@ -107,7 +107,7 @@ class DigestEmail extends \WC_Email {
 		$startTime = $this->schedule == 'daily' ? '-24 hours' : '-1 week';
 
 		if( ENV == 'dev' ) $startTime = '-10 years';
-		
+
 		$this->subscribers = new Subscribers($this->subscriberStatus, $startTime);
 		if( !$this->subscribers->hasSubscribers() ) {
 			return;

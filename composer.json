@@ -3,7 +3,7 @@
 	"description": "Send recurring email digests based on WooCommerce orders or subscriptions.",
 	"type": "wordpress-plugin",
 	"license": "GPL v3",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"authors": [
 	    {
 	      "name": "Philip Downer",
@@ -19,11 +19,6 @@
 	"require-dev": {
 		"phpunit/phpunit": "^7.3",
 		"mockery/mockery": "^1.1"
-	},
-	"autoload": {
-		"psr-4": {
-			"WCEmailDigest\\": "src/"
-		}
 	},
 	"autoload-dev": {
 		"psr-4": {

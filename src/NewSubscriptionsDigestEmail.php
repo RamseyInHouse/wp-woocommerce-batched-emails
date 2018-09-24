@@ -2,7 +2,7 @@
 namespace WCEmailDigest;
 
 class NewSubscriptionsDigestEmail extends DigestEmail {
-	
+
 	/**
 	 * Cron hook name
 	 * @var string
@@ -28,7 +28,7 @@ class NewSubscriptionsDigestEmail extends DigestEmail {
 		$this->template_plain = 'emails/plain/new-subscriptions-digest.php';
 
 		$this->subscriberStatus = ['active'];
-		
+
 		parent::__construct();
 
 		add_action('woocommerce_update_options_email_' . $this->id, [$this, 'process_admin_options']);

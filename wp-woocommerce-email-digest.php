@@ -3,7 +3,7 @@
 Plugin Name:  WooCommerce Email Digest
 Plugin URI:   https://www.daveramsey.com
 Description:  Compiles a list of recent events/transactions from WooCommerce and emails the designated recipient on a recurring schedule.
-Version:      1.0.1
+Version:      1.0.2
 Author:       Philip Downer <philip.downer@daveramsey.com>
 Author URI:   https://philipdowner.com
 License:      GPLv3
@@ -22,17 +22,19 @@ define('WCED_REQUIRED_WC_VERSION', '3.4');
 define('WCED_REQUIRED_WCS_VERSION', '2.2.9');
 
 if( wcEmailDigest_requirementsMet() ) {
-	//Require needed files
-	if( !class_exists('WC_Emails') ) {
-		include_once(plugin_dir_path(__DIR__) . 'woocommerce/includes/class-wc-emails.php');
-	}
+    if( !class_exists('WC_Emails') ) {
+        require_once(plugin_dir_path(__DIR__) . 'woocommerce/includes/class-wc-emails.php');
+    }
 
-	if( !class_exists('WC_Email') ) {
-		include_once(plugin_dir_path(__DIR__) . 'woocommerce/includes/emails/class-wc-email.php');
-	}
+    if( !class_exists('WC_Email') ) {
+        require_once(plugin_dir_path(__DIR__) . 'woocommerce/includes/emails/class-wc-email.php');
+    }
 
-	require_once(plugin_dir_path(__FILE__) . '/vendor/autoload.php');
-	
+    require_once(trailingslashit(__DIR__) . "src/DigestEmail.php");
+    require_once(trailingslashit(__DIR__) . "src/Subscribers.php");
+    require_once(trailingslashit(__DIR__) . "src/NewSubscriptionsDigestEmail.php");
+    require_once(trailingslashit(__DIR__) . "src/CancelledSubscriptionsDigestEmail.php");
+
 	//Hook into available WC Emails
 	add_filter('woocommerce_email_classes', 'wcEmailDigest_add_new_subscription_digest', 10, 1);
 
